@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TCG Listing Assistant</title>
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>TCG Listing Assistant</h1>
+        <p>TCGplayer Mobile App CSV → Seller Portal inventory</p>
+      </div>
+      <span id="statusBadge" class="badge">Idle</span>
+    </header>
+
+    <section class="card">
+      <label class="fileLabel" for="csvFile">Choose TCGplayer CSV</label>
+      <input id="csvFile" type="file" accept=".csv,text/csv" />
+      <div id="fileSummary" class="muted">No file loaded.</div>
+    </section>
+
+    <section class="card">
+      <h2>Listing mode</h2>
+      <label><input type="radio" name="listingMode" value="review" checked /> Review and confirm every card</label>
+      <label><input type="radio" name="listingMode" value="automaticCsv" /> Automatically list using CSV prices</label>
+      <p>Automatic mode uses only the CSV price and continues after each successful save.</p>
+    </section>
+
+    <section id="pricingCard" class="card">
+      <h2>Pricing</h2>
+      <p>Prices come only from your CSV or the value you enter here. The extension does not read prices from Seller Portal.</p>
+      <label><input type="radio" name="pricing" value="csv" checked /> Market price from CSV</label>
+      <label class="inline">
+        <input type="radio" name="pricing" value="csvPercent" />
+        CSV market price ×
+        <input id="marketPercent" type="number" min="1" max="200" step="1" value="95" />%
+      </label>
+      <label class="inline">
+        <input type="radio" name="pricing" value="fixed" />
+        Fixed price $
+        <input id="fixedPrice" type="number" min="0.01" step="0.01" placeholder="0.00" />
+      </label>
+    </section>
+
+    <section id="reviewCard" class="card reviewCard" hidden>
+      <h2>Review current card</h2>
+      <div id="reviewDetails"></div>
+      <p>Verify the highlighted Seller Portal row and values, then confirm this listing.</p>
+      <button id="confirmSaveBtn" class="primary">Confirm &amp; Save This Card</button>
+    </section>
+
+    <section class="actions">
+      <button id="startBtn" class="primary">Start Listing</button>
+      <button id="pauseBtn">Pause</button>
+      <button id="resumeBtn">Resume</button>
+      <button id="resetBtn" class="dangerGhost">Reset</button>
+    </section>
+
+    <section class="card">
+      <div class="progressHeader">
+        <h2>Queue</h2>
+        <span id="progressText">0 / 0</span>
+      </div>
+      <progress id="progressBar" max="1" value="0"></progress>
+      <div id="lastMessage" class="muted"></div>
+      <div id="queue" class="queue"></div>
+    </section>
+  </main>
+  <script src="sidepanel.js"></script>
+</body>
+</html>
